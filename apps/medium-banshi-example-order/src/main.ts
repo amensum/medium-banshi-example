@@ -1,21 +1,38 @@
-/**
- * This is not a production server yet!
- * This is only a minimal backend to get started.
- */
-
 import express from 'express';
-import * as path from 'path';
+import AppDataSource from './datasource';
+import Order from './models/Order';
 
-const app = express();
+const run = async () => {
+  const dataSource = await AppDataSource.initialize();
 
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
+  const orderRepository = dataSource.getRepository(Order);
 
-app.get('/api', (req, res) => {
-  res.send({ message: 'Welcome to medium-banshi-example-order!' });
-});
+  const testOrder1 = new Order();
+  testOrder1.userId = 1;
+  testOrder1.item = "Tesla S";
+  testOrder1.price = 100_000;
 
-const port = process.env.PORT || 3333;
-const server = app.listen(port, () => {
-  console.log(`Listening at http://localhost:${port}/api`);
-});
-server.on('error', console.error);
+  const testOrder2 = new Order();
+  testOrder2.userId = 2;
+  testOrder2.item = "Tesla X";
+  testOrder2.price = 200_000;
+
+  await orderRepository.save([testOrder1, testOrder2]);
+
+  const app = express();
+  const port = process.env.PORT || 3333;
+
+  app.get('/orders', async (req, res) => {
+    const collection = await orderRepository.find();
+
+    res.send({ data: collection });
+  });
+
+  const server = app.listen(port, () => {
+    console.log(`Listening at http://localhost:${port}`);
+  });
+
+  server.on('error', console.error);
+};
+
+run();
