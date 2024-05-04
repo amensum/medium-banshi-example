@@ -34,7 +34,11 @@
       "options": {
         "targetName": "test"
       },
-      "exclude": ["apps/medium-banshi-example-e2e/**/*"]
+      "exclude": [
+        "apps/medium-banshi-example-e2e/**/*",
+        "apps/medium-banshi-example-user-e2e/**/*",
+        "apps/medium-banshi-example-order-e2e/**/*"
+      ]
     }
   ]
 }

@@ -1,0 +1,24 @@
+{
+  "name": "medium-banshi-example-order",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/medium-banshi-example-order/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "medium-banshi-example-order:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "medium-banshi-example-order:build:development"
+        },
+        "production": {
+          "buildTarget": "medium-banshi-example-order:build:production"
+        }
+      }
+    }
+  }
+}
