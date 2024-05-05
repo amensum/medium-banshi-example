@@ -1,7 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { IOrder } from '@medium-banshi-example/convention';
 
 @Entity()
-class Order {
+class Order implements IOrder {
     @PrimaryGeneratedColumn()
     id: number;
 

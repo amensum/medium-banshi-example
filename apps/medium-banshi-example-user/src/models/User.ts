@@ -1,7 +1,8 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { IUser } from '@medium-banshi-example/convention';
 
 @Entity()
-class User {
+class User implements IUser {
     @PrimaryGeneratedColumn()
     id: number;
 
