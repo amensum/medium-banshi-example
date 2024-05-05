@@ -1,4 +1,6 @@
 import express from 'express';
+import { BanshiResource } from 'banshi';
+import { BanshiHelper } from '@medium-banshi-example/convention';
 import AppDataSource from './datasource';
 import User from './models/User';
 
@@ -19,6 +21,15 @@ const run = async () => {
 
   const app = express();
   const port = process.env.PORT || 3333;
+
+  app.use(express.json());
+
+  app.post(
+    '/user-repository',
+    BanshiHelper.makeReceiver({
+      resource: new BanshiResource(userRepository),
+    }),
+  );
 
   app.get('/users', async (req, res) => {
     const collection = await userRepository.find();
